@@ -9,6 +9,12 @@
 <div class="container">
     <h1>Elenco dei post</h1>
 
+    @if (session('deleted'))
+      <div class="alert alert-success" role="alert">
+        {{session('deleted')}}
+      </div>
+    @endif
+
     <table class="table table-striped">
       <thead>
         <tr>
@@ -30,7 +36,13 @@
               <a href="{{route('admin.posts.edit', $post)}}" class="btn btn-primary">Modifica</a>
             </td>
             <td>
-              <a href="#" class="btn btn-danger">Cancella</a>
+              <form onsubmit="return confirm('Sei sicuro di voler eliminare {{$post->title}}?')" 
+                action="{{route('admin.posts.destroy', $post)}}" 
+                method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">Cancella</button>
+              </form>
             </td>
           </tr>
         @endforeach
