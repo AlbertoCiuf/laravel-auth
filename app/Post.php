@@ -7,6 +7,13 @@ use Illuminate\Support\Str;
 
 class Post extends Model
 {
+
+  protected $fillable = [
+    'title',
+    'content',
+    'slug'
+  ];
+
   public static function generateUniqueSlug($title) {
     $slug = Str::slug($title, '-');
     $originalSlug = $slug;

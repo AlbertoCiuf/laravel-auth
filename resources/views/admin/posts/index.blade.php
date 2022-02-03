@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('title')
+  | Elenco post
+@endsection
+
+
 @section('content')
 <div class="container">
     <h1>Elenco dei post</h1>
@@ -19,7 +24,7 @@
             <th scope="row">{{$post->id}}</th>
             <td>{{$post->title}}</td>
             <td>
-              <a href="#" class="btn btn-warning">Visualizza</a>
+              <a href="{{route('admin.posts.show', $post)}}" class="btn btn-warning">Visualizza</a>
             </td>
             <td>
               <a href="#" class="btn btn-primary">Modifica</a>

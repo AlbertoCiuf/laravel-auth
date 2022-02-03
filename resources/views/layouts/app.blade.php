@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>Boolpress @yield('title')</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -28,7 +28,8 @@
                 </a>
 
                 @auth
-                <a href="{{route('admin.posts.index')}}" class="nav-link">Elenco dei post</a>  
+                <a href="{{route('admin.posts.index')}}" class="nav-link">Elenco dei post</a>
+                <a href="{{route('admin.posts.create')}}" class="nav-link">Crea un nuovo post</a>
                 @endauth
 
                 

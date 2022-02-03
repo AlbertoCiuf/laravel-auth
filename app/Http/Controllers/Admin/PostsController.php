@@ -15,7 +15,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        $posts = Post::paginate(5);
+        $posts = Post::orderBy('id','desc')->paginate(5);
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -26,7 +26,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -37,7 +37,24 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate(
+          [
+            'title' => 'required|min:2|max:255',
+            'content' => 'min:5'
+          ],
+          [
+            'title.required' => 'Il titolo è un campo obbligatorio.',
+            'title.min' => 'Il titolo deve essere lungo almeno :min caratteri.',
+            'title.max' => 'Il titolo deve essere lungo massimo :max caratteri',
+            'content.min' => 'Il contenuto deve essere lungo almeno :min caratteri'
+          ]);
+
+        $newPost = new Post();
+        $newPost->fill($data);
+        $newPost->slug = Post::generateUniqueSlug($newPost->title);
+        $newPost->save();
+
+        return redirect()->route('admin.posts.show', $newPost)->with('success', 'Nuovo post creato correttamente');
     }
 
     /**
@@ -48,7 +65,11 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        if (!$post) {
+          abort(404);
+        }
+        return view('admin.posts.show', compact('post'));
     }
 
     /**
