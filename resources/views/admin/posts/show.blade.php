@@ -19,5 +19,6 @@
   </p>
 
   <a href="{{route('admin.posts.index')}}" class="btn btn-warning">Torna alla lista</a>
+  <a href="{{route('admin.posts.edit', $post)}}" class="btn btn-primary">Modifica</a>
 </div>
 @endsection

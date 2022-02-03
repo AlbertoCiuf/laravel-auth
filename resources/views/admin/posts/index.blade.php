@@ -27,7 +27,7 @@
               <a href="{{route('admin.posts.show', $post)}}" class="btn btn-warning">Visualizza</a>
             </td>
             <td>
-              <a href="#" class="btn btn-primary">Modifica</a>
+              <a href="{{route('admin.posts.edit', $post)}}" class="btn btn-primary">Modifica</a>
             </td>
             <td>
               <a href="#" class="btn btn-danger">Cancella</a>

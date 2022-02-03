@@ -80,7 +80,11 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+      $post = Post::find($id);
+      if (!$post) {
+        abort(404);
+      }
+      return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -90,9 +94,27 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $request->validate(
+          [
+            'title' => 'required|min:2|max:255',
+            'content' => 'min:5'
+          ],
+          [
+            'title.required' => 'Il titolo è un campo obbligatorio.',
+            'title.min' => 'Il titolo deve essere lungo almeno :min caratteri.',
+            'title.max' => 'Il titolo deve essere lungo massimo :max caratteri',
+            'content.min' => 'Il contenuto deve essere lungo almeno :min caratteri'
+          ]);
+
+          $data = $request->all();
+          if ($data['title'] != $post->title) {
+            $data['slug'] = Post::generateUniqueSlug($data['title']);
+          }
+
+          $post->update($data);
+          return redirect()->route('admin.posts.show', $post);
     }
 
     /**
